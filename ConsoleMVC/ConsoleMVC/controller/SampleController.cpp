@@ -22,7 +22,8 @@ void SampleController::handleRegister() {
     std::string id;
     while (true) {
         view_.showRegisterPrompt();
-        if (!std::getline(in_, id) || id.empty()) return;
+        if (!std::getline(in_, id)) return;
+        if (id.empty()) continue;
         if (!repo_.exists(id)) break;
         view_.showDuplicateId();
     }

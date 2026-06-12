@@ -23,7 +23,8 @@ void OrderController::run() {
     std::string sampleId;
     while (true) {
         view_.showSampleIdPrompt();
-        if (!std::getline(in_, sampleId) || sampleId.empty()) return;
+        if (!std::getline(in_, sampleId)) return;
+        if (sampleId.empty()) continue;
         if (sampleRepo_.exists(sampleId)) break;
         view_.showInvalidSampleId();
     }
@@ -36,7 +37,8 @@ void OrderController::run() {
     while (true) {
         view_.showQuantityPrompt();
         std::string qtyStr;
-        if (!std::getline(in_, qtyStr) || qtyStr.empty()) return;
+        if (!std::getline(in_, qtyStr)) return;
+        if (qtyStr.empty()) continue;
         try { qty = std::stoi(qtyStr); } catch (...) { qty = 0; }
         if (qty > 0) break;
         view_.showInvalidQuantity();
