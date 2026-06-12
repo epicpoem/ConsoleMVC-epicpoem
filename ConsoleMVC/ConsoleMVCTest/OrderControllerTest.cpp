@@ -64,3 +64,25 @@ TEST_F(OrderControllerTest, ZeroQuantityShowsError) {
     EXPECT_CALL(view, showInvalidQuantity()).Times(1);
     ctrl.run();
 }
+
+TEST_F(OrderControllerTest, NegativeQuantityShowsError) {
+    sampleRepo.add({"S-001", "Test Sample", 0.5, 0.9, 100});
+    NiceMock<MockOrderView> view;
+    std::istringstream in("S-001\nCustomer A\n-5\n");
+    OrderController ctrl(in, view, sampleRepo, orderRepo);
+
+    EXPECT_CALL(view, showInvalidQuantity()).Times(1);
+    ctrl.run();
+    EXPECT_EQ(orderRepo.countByStatus(OrderStatus::RESERVED), 0);
+}
+
+TEST_F(OrderControllerTest, NonNumericQuantityShowsError) {
+    sampleRepo.add({"S-001", "Test Sample", 0.5, 0.9, 100});
+    NiceMock<MockOrderView> view;
+    std::istringstream in("S-001\nCustomer A\nabc\n");
+    OrderController ctrl(in, view, sampleRepo, orderRepo);
+
+    EXPECT_CALL(view, showInvalidQuantity()).Times(1);
+    ctrl.run();
+    EXPECT_EQ(orderRepo.countByStatus(OrderStatus::RESERVED), 0);
+}

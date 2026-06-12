@@ -61,3 +61,25 @@ TEST_F(ReleaseControllerTest, SelectOrderProcessesRelease) {
     ctrl.run();
     EXPECT_EQ(orderRepo.countByStatus(OrderStatus::RELEASE), 1);
 }
+
+TEST_F(ReleaseControllerTest, OutOfRangeIndexShowsInvalidInput) {
+    orderRepo.add({"ORD-0001", "S-001", "Customer", 10, OrderStatus::CONFIRMED});
+    NiceMock<MockReleaseView> view;
+    std::istringstream in("99\n0\n");
+    ReleaseController ctrl(in, view, orderRepo, sampleRepo);
+
+    EXPECT_CALL(view, showInvalidInput()).Times(1);
+    ctrl.run();
+    EXPECT_EQ(orderRepo.countByStatus(OrderStatus::CONFIRMED), 1);
+}
+
+TEST_F(ReleaseControllerTest, NonNumericInputShowsInvalidInput) {
+    orderRepo.add({"ORD-0001", "S-001", "Customer", 10, OrderStatus::CONFIRMED});
+    NiceMock<MockReleaseView> view;
+    std::istringstream in("abc\n0\n");
+    ReleaseController ctrl(in, view, orderRepo, sampleRepo);
+
+    EXPECT_CALL(view, showInvalidInput()).Times(1);
+    ctrl.run();
+    EXPECT_EQ(orderRepo.countByStatus(OrderStatus::CONFIRMED), 1);
+}

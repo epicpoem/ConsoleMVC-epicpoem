@@ -145,6 +145,38 @@ TEST_F(ApprovalControllerTest, PhysicalStockIncludesProducingProgress) {
     EXPECT_EQ(orderRepo.countByStatus(OrderStatus::CONFIRMED), 1);
 }
 
+TEST_F(ApprovalControllerTest, OutOfRangeIndexShowsInvalidInput) {
+    orderRepo.add({"ORD-0001", "S-001", "Customer", 50, OrderStatus::RESERVED});
+    NiceMock<MockApprovalView> view;
+    std::istringstream in("99\n0\n");
+    ApprovalController ctrl(in, view, orderRepo, sampleRepo, clock);
+
+    EXPECT_CALL(view, showInvalidInput()).Times(1);
+    ctrl.run();
+}
+
+TEST_F(ApprovalControllerTest, NonNumericIndexShowsInvalidInput) {
+    orderRepo.add({"ORD-0001", "S-001", "Customer", 50, OrderStatus::RESERVED});
+    NiceMock<MockApprovalView> view;
+    std::istringstream in("abc\n0\n");
+    ApprovalController ctrl(in, view, orderRepo, sampleRepo, clock);
+
+    EXPECT_CALL(view, showInvalidInput()).Times(1);
+    ctrl.run();
+}
+
+TEST_F(ApprovalControllerTest, InvalidApprovalActionShowsInvalidInput) {
+    sampleRepo.add({"S-001", "Sample", 0.5, 0.9, 100});
+    orderRepo.add({"ORD-0001", "S-001", "Customer", 50, OrderStatus::RESERVED});
+    NiceMock<MockApprovalView> view;
+    std::istringstream in("1\nX\n0\n");
+    ApprovalController ctrl(in, view, orderRepo, sampleRepo, clock);
+
+    EXPECT_CALL(view, showInvalidInput()).Times(1);
+    ctrl.run();
+    EXPECT_EQ(orderRepo.countByStatus(OrderStatus::RESERVED), 1);
+}
+
 TEST_F(ApprovalControllerTest, ProducingOrderSetsProductionStartTime) {
     sampleRepo.add({"S-001", "Sample", 0.5, 0.9, 0});
     orderRepo.add({"ORD-0001", "S-001", "Customer", 10, OrderStatus::RESERVED});

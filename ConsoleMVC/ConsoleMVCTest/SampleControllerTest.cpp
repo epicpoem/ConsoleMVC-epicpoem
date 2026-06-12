@@ -96,3 +96,32 @@ TEST_F(SampleControllerTest, RegisterDuplicateIdShowsError) {
     EXPECT_CALL(view, showDuplicateId()).Times(1);
     ctrl.run();
 }
+
+TEST_F(SampleControllerTest, NegativeYieldShowsOutOfRangeError) {
+    NiceMock<MockSampleView> view;
+    std::istringstream in("1\nS-001\nTest Sample\n0.5\n-0.5\n0\n");
+    SampleController ctrl(in, view, repo);
+
+    EXPECT_CALL(view, showYieldOutOfRange()).Times(1);
+    ctrl.run();
+    EXPECT_FALSE(repo.exists("S-001"));
+}
+
+TEST_F(SampleControllerTest, YieldAboveOneShowsOutOfRangeError) {
+    NiceMock<MockSampleView> view;
+    std::istringstream in("1\nS-001\nTest Sample\n0.5\n1.5\n0\n");
+    SampleController ctrl(in, view, repo);
+
+    EXPECT_CALL(view, showYieldOutOfRange()).Times(1);
+    ctrl.run();
+    EXPECT_FALSE(repo.exists("S-001"));
+}
+
+TEST_F(SampleControllerTest, SearchWithInvalidCriteriaShowsError) {
+    NiceMock<MockSampleView> view;
+    std::istringstream in("3\n9\nabc\n0\n");
+    SampleController ctrl(in, view, repo);
+
+    EXPECT_CALL(view, showInvalidInput()).Times(1);
+    ctrl.run();
+}
