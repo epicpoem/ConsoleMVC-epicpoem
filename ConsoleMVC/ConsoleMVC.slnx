@@ -3,6 +3,6 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="ConsoleMVC/ConsoleMVC.vcxproj" />
-  <Project Path="ConsoleMVCTest/ConsoleMVCTest.vcxproj" />
+  <Project Path="ConsoleMVC/ConsoleMVC.vcxproj" Id="e266a007-9c03-492c-babc-6f6264c0f767" />
+  <Project Path="ConsoleMVCTest/ConsoleMVCTest.vcxproj" Id="a1b2c3d4-e5f6-7890-abcd-ef1234567890" />
 </Solution>
