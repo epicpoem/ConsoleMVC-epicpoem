@@ -263,3 +263,28 @@
 
 ### 다음 작업 지시
 - Negative TC 추가, 테스트
+
+---
+
+## [2026-06-12] Negative TC 추가
+
+### 작업 내용
+- **SampleController** (3개): 수율<0, 수율>1, 잘못된 검색 기준 → 오류 표시 검증
+- **OrderController** (2개): 음수 수량, 비숫자 수량 → showInvalidQuantity + 주문 미생성 검증
+- **ApprovalController** (3개): 범위 초과 인덱스, 비숫자 인덱스, 잘못된 승인 액션(Y/N 외) → showInvalidInput + 상태 유지 검증
+- **ReleaseController** (2개): 범위 초과 인덱스, 비숫자 입력 → showInvalidInput + CONFIRMED 상태 유지 검증
+- **빌드/테스트**: Debug x64 빌드 성공, **53/53 테스트 통과** (기존 43 → 53, 신규 10개 추가)
+
+### 커밋
+- `82452af` [AI-Test] Negative TC 추가 - 입력 오류 및 범위 초과 케이스 검증
+
+### 리뷰 요청
+- 추가된 Negative TC 커버리지가 충분한지 검토 부탁드립니다.
+- 누락된 케이스가 있으면 추가 지시 부탁드립니다.
+
+---
+### 리뷰 (by User)
+-
+
+### 다음 작업 지시
+-
