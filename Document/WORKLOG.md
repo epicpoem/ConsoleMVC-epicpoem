@@ -319,3 +319,22 @@
 ### 다음 작업 지시
 - 최종 spec 리뷰
 - critical 빠진 내용 없으면 푸쉬 후 POC 개발 마무리
+
+---
+
+## [2026-06-12] 최종 SPEC 리뷰 및 메인 메뉴 현황 요약 구현
+
+### 작업 내용
+- **최종 SPEC 리뷰** 결과: 1개 누락 항목 발견 및 구현 완료
+  - **누락 항목**: SPEC 섹션 4 "메인 화면 시스템 현황 요약" (등록 시료 수, 총 재고, 전체 주문 수, 생산라인 대기 건수)
+  - **구현**: `IMainMenuView::showSummary()` 추가 / `MainMenuView` 구현 / `MainMenuController`에 `ISampleRepository&`, `IOrderRepository&` 의존성 주입
+- **테스트**: `MainMenuControllerTest`에 `showSummary` 모킹 추가 + `ShowsSummaryOnEachMenuDisplay` TC 신규 추가
+- **빌드/테스트**: Debug x64 빌드 성공, **54/54 테스트 통과** (기존 53 → 54, 신규 1개 추가)
+- **SPEC 전체 커버리지**: 5-1~5-6 전 기능 구현 완료, 주요 비즈니스 로직 (수율×0.9 공식, 물리적 재고, IClock 추상화, PRODUCING→CONFIRMED 자동 전환) 포함
+
+### 커밋
+- `2d59a72` [AI-Feature] 메인 메뉴 시스템 현황 요약 표시 구현 (SPEC 섹션 4)
+- `fb49ef7` [AI-Test] MainMenuController showSummary 테스트 추가
+
+### 리뷰 요청
+- POC 개발 마무리 — 모든 SPEC 항목 구현 완료 확인 부탁드립니다.

@@ -143,6 +143,12 @@ x64\Debug\ConsoleMVCTest.exe
 ### 메인 메뉴
 
 ```
+[시스템 현황]
+  등록 시료    : 2 종
+  총 재고      : 150 ea
+  전체 주문    : 3 건
+  생산라인 대기: 1 건
+
 ========================================
    반도체 시료 생산주문관리 시스템
 ========================================
@@ -197,8 +203,8 @@ x64\Debug\ConsoleMVCTest.exe
 ### 테스트 결과
 
 ```
-[==========] Running 53 tests from 7 test suites.
-[  PASSED  ] 53 tests.
+[==========] Running 54 tests from 7 test suites.
+[  PASSED  ] 54 tests.
 ```
 
 ---
@@ -207,7 +213,7 @@ x64\Debug\ConsoleMVCTest.exe
 
 | 파일 | 테스트 수 | 주요 검증 |
 |------|-----------|-----------|
-| MainMenuControllerTest | 9 | 메뉴 네비게이션, 서브컨트롤러 호출 |
+| MainMenuControllerTest | 10 | 메뉴 네비게이션, 서브컨트롤러 호출, 현황 요약 표시 |
 | SampleControllerTest | 10 | 등록/조회/검색 + 수율 범위 Negative TC |
 | OrderControllerTest | 6 | 주문 생성 + 음수/비숫자 수량 Negative TC |
 | ApprovalControllerTest | 12 | 승인/거절 + 물리적 재고 + 공식 검증 + Negative TC |
