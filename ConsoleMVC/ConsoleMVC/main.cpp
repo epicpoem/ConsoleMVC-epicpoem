@@ -52,7 +52,7 @@ int main() {
         &releaseCtrl
     };
 
-    MainMenuController mainCtrl(std::cin, mainMenuView, subs);
+    MainMenuController mainCtrl(std::cin, mainMenuView, subs, sampleRepo, orderRepo);
     mainCtrl.run();
 
     return 0;

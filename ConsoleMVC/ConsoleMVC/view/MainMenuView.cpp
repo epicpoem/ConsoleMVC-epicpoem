@@ -1,6 +1,14 @@
 #include "MainMenuView.h"
 #include <iostream>
 
+void MainMenuView::showSummary(int sampleCount, int totalStock, int totalOrders, int producingCount) {
+    std::cout << "\n[시스템 현황]\n";
+    std::cout << "  등록 시료    : " << sampleCount    << " 종\n";
+    std::cout << "  총 재고      : " << totalStock      << " ea\n";
+    std::cout << "  전체 주문    : " << totalOrders     << " 건\n";
+    std::cout << "  생산라인 대기: " << producingCount  << " 건\n";
+}
+
 void MainMenuView::showMenu() {
     std::cout << "\n========================================\n";
     std::cout << "   반도체 시료 생산주문관리 시스템\n";
