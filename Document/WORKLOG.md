@@ -235,3 +235,30 @@
 
 ### 다음 작업 지시
 - 실제 구현시 ../DataPersistence 사용하여 데이터 저장 / 로드해야 함. 해당 내용 고려하여 로직 분리 리팩토링 수행
+
+---
+
+## [2026-06-12] Repository 인터페이스 분리 리팩토링
+
+### 작업 내용
+- **ISampleRepository / IOrderRepository 인터페이스 신규 추가**
+  - 컨트롤러가 구체 구현체 대신 인터페이스에 의존하도록 변경
+  - DataPersistence 완성 시 `main.cpp`에서 구현체 교체만으로 JSON 저장/로드 전환 가능
+- **SampleRepository, OrderRepository**: 각 인터페이스를 상속(`:public ISampleRepository`)
+- **전체 컨트롤러 6개**: 생성자 파라미터 및 멤버 변수 타입을 인터페이스 참조로 변경
+- **main.cpp 무변경**: 구체 타입이 인터페이스와 호환되므로 교체 불필요
+- **빌드/테스트**: Debug x64 빌드 성공, **43/43 테스트 통과**
+
+### 커밋
+- `6a53094` [AI-Refactoring] Repository 인터페이스 분리 - DataPersistence 교체 대응
+
+### 리뷰 요청
+- 인터페이스 설계 방향 (ISampleRepository / IOrderRepository) 이 의도에 맞는지 확인 부탁드립니다.
+- DataPersistence와 연동 시 `main.cpp`에서 구현체만 교체하면 되는 구조가 맞는지 검토 부탁드립니다.
+
+---
+### 리뷰 (by User)
+-
+
+### 다음 작업 지시
+-
