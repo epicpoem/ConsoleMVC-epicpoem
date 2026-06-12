@@ -175,3 +175,32 @@
 ### 다음 작업 지시
 - 향후부터 유닛 테스트 빌드 직접 빌드, 수행 후 worklog 에 반영하여 작성
 - PRD 다음 개발 계획 수행
+
+---
+
+## [2026-06-12] Clock 추상화 및 SPEC 준수 개선
+
+### 작업 내용
+- **IClock 인터페이스 + SystemClock 구현** 추가 (테스트 시 FakeClock 주입 가능)
+- **실생산량 공식 수정**: `ceil(부족분/수율)` → `ceil(부족분/(수율*0.9))` (SPEC 10% 공정오차 반영)
+- **물리적 재고 계산**: 보유재고 + PRODUCING 주문의 진행분 비례 합산
+- **ApprovalController**: productionStartTime 설정, 물리적 재고 기반 승인 판단
+- **ProductionLineController**: PRODUCING→CONFIRMED 자동 전환 + increaseStock, 실제 시료명/진행률 표시
+- **SampleController**: 중복 ID 시 재입력 유도 루프 (FEATURE-02 준수)
+- **OrderController**: 시료ID/수량 오류 시 재입력 유도 루프 + showSampleIdPrompt 분리 (FEATURE-03 준수)
+- **빌드/테스트**: Debug x64 빌드 성공, **43/43 테스트 통과** (기존 38 → 43, 신규 5개 추가)
+
+### 커밋
+- `5e071a9` [AI-Feature] Clock 추상화 및 SPEC 준수 개선
+
+### 리뷰 요청
+- 생산라인 자동 전환(PRODUCING→CONFIRMED) 및 increaseStock 동작 방식 확인 부탁드립니다.
+- 물리적 재고 계산 로직이 의도에 맞는지 확인 부탁드립니다.
+- 재입력 유도 루프의 종료 조건(빈 문자열 입력 시 취소) 방식 확인 부탁드립니다.
+
+---
+### 리뷰 (by User)
+-
+
+### 다음 작업 지시
+-
