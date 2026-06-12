@@ -1,5 +1,10 @@
 # ConsoleMVC — 반도체 시료 생산주문관리 시스템 PoC
 
+> **[📋 WORKLOG.md](Document/WORKLOG.md)**  
+> 교육과정 내 개인 프로젝트이기에, AI 활용 이력 / Harness 도입 / 테스트 적용 / 클린 코드 수행 증빙 목적으로 WORKLOG.md를 여기에 제출합니다.
+
+---
+
 반도체 시료 생산주문관리 시스템(`SampleOrderSystem`)의 **MVC 계층 구조**를 검증하기 위한 PoC(Proof of Concept) 프로젝트입니다.  
 실제 비즈니스 로직보다 **패키지 구조와 계층 분리**가 목적이며, 이후 `SampleOrderSystem`에서 이 구조를 그대로 활용합니다.
 
