@@ -29,3 +29,11 @@ bool SampleRepository::decreaseStock(const std::string& id, int amount) {
     it->stock = std::max(0, it->stock - amount);
     return true;
 }
+
+bool SampleRepository::increaseStock(const std::string& id, int amount) {
+    auto it = std::find_if(samples_.begin(), samples_.end(),
+        [&id](const Sample& s) { return s.id == id; });
+    if (it == samples_.end()) return false;
+    it->stock += amount;
+    return true;
+}

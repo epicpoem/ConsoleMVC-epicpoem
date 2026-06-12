@@ -5,6 +5,7 @@ class IOrderView {
 public:
     virtual ~IOrderView() = default;
     virtual void showOrderForm() = 0;
+    virtual void showSampleIdPrompt() = 0;
     virtual void showCustomerNamePrompt() = 0;
     virtual void showQuantityPrompt() = 0;
     virtual void showOrderSuccess(const Order& order) = 0;

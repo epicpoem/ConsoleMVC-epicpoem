@@ -19,14 +19,12 @@ void SampleController::run() {
 }
 
 void SampleController::handleRegister() {
-    view_.showRegisterPrompt();
-
     std::string id;
-    if (!std::getline(in_, id) || id.empty()) return;
-
-    if (repo_.exists(id)) {
+    while (true) {
+        view_.showRegisterPrompt();
+        if (!std::getline(in_, id) || id.empty()) return;
+        if (!repo_.exists(id)) break;
         view_.showDuplicateId();
-        return;
     }
 
     view_.showNamePrompt();

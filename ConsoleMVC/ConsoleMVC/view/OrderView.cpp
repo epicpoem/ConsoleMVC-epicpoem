@@ -3,6 +3,9 @@
 
 void OrderView::showOrderForm() {
     std::cout << "\n[시료 주문]\n";
+}
+
+void OrderView::showSampleIdPrompt() {
     std::cout << "시료 ID  : ";
 }
 

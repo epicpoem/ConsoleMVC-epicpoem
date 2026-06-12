@@ -3,6 +3,7 @@
 #include <windows.h>
 #include "model/SampleRepository.h"
 #include "model/OrderRepository.h"
+#include "model/SystemClock.h"
 #include "view/MainMenuView.h"
 #include "view/SampleView.h"
 #include "view/OrderView.h"
@@ -25,6 +26,7 @@ int main() {
 
     SampleRepository sampleRepo;
     OrderRepository  orderRepo;
+    SystemClock      systemClock;
 
     MainMenuView       mainMenuView;
     SampleView         sampleView;
@@ -36,9 +38,9 @@ int main() {
 
     SampleController       sampleCtrl(std::cin, sampleView, sampleRepo);
     OrderController        orderCtrl(std::cin, orderView, sampleRepo, orderRepo);
-    ApprovalController     approvalCtrl(std::cin, approvalView, orderRepo, sampleRepo);
+    ApprovalController     approvalCtrl(std::cin, approvalView, orderRepo, sampleRepo, systemClock);
     MonitoringController   monitoringCtrl(std::cin, monitoringView, orderRepo, sampleRepo);
-    ProductionLineController prodLineCtrl(std::cin, productionLineView, orderRepo);
+    ProductionLineController prodLineCtrl(std::cin, productionLineView, orderRepo, sampleRepo, systemClock);
     ReleaseController      releaseCtrl(std::cin, releaseView, orderRepo, sampleRepo);
 
     std::array<IController*, 6> subs = {

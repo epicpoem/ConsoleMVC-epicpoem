@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <ctime>
 #include "OrderStatus.h"
 
 struct Order {
@@ -10,4 +11,5 @@ struct Order {
     OrderStatus status{OrderStatus::RESERVED};
     int actualProduction{0};
     double totalProductionTimeMin{0.0};
+    std::time_t productionStartTime{0};
 };

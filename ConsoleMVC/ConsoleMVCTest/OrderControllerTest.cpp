@@ -12,6 +12,7 @@ using ::testing::NiceMock;
 class MockOrderView : public IOrderView {
 public:
     MOCK_METHOD(void, showOrderForm, (), (override));
+    MOCK_METHOD(void, showSampleIdPrompt, (), (override));
     MOCK_METHOD(void, showCustomerNamePrompt, (), (override));
     MOCK_METHOD(void, showQuantityPrompt, (), (override));
     MOCK_METHOD(void, showOrderSuccess, (const Order&), (override));
