@@ -5,6 +5,7 @@
 > - 리뷰 요청 섹션을 작성 후 사용자에게 리뷰를 요청한다.
 > - 사용자는 리뷰 섹션에 피드백/요청사항을 작성 후 커밋한다.
 > - Agent는 다음 작업 시작 전 반드시 최신 WORKLOG를 확인한다.
+> - **새 로그는 파일 맨 아래에 추가한다** (오래된 순 위 → 최신 순 아래).
 
 ---
 
@@ -32,52 +33,37 @@
 
 ---
 
-<!-- 실제 로그는 아래에 최신순으로 작성 -->
+<!-- 실제 로그는 아래에 오래된 순으로 작성 (새 항목은 맨 아래에 추가) -->
 
-## [2026-06-12] 콘솔 한글 인코딩 깨짐 수정
+## [2026-06-12] PRD.md 및 FEATURES 문서 작성
 
 ### 작업 내용
-- 원인: Windows 콘솔 기본 코드페이지(949, EUC-KR)로 인해 UTF-8 문자열이 깨짐
-- 수정: `main()` 시작 시 `SetConsoleOutputCP(CP_UTF8)` / `SetConsoleCP(CP_UTF8)` 호출 추가
-- 확인: 메인 메뉴 한글 정상 출력 확인
+- `Document/PRD.md` 작성: 사용자 관점 기능 요구사항 정리 (메인 메뉴 + 6개 하위 기능)
+- `Document/PRD.md` 작성: 사용자 관점 기능 요구사항 (메인 메뉴 + 6개 하위 기능)
+- `Document/FEATURES/FEATURE-01-main-menu.md` 작성
+- `Document/FEATURES/FEATURE-02-sample-management.md` 작성
+- `Document/FEATURES/FEATURE-03-order-placement.md` 작성
+- `Document/FEATURES/FEATURE-04-order-approval.md` 작성
+- `Document/FEATURES/FEATURE-05-monitoring.md` 작성
+- `Document/FEATURES/FEATURE-06-production-line.md` 작성
+- `Document/FEATURES/FEATURE-07-release.md` 작성
 
 ### 커밋
-- `ae6fa5b` [AI-Fix] 콘솔 한글 인코딩 깨짐 수정
+- (커밋 예정)
 
 ### 리뷰 요청
-- 콘솔에서 한글 정상 출력 확인 부탁드립니다.
-- 확인 후 Feature 비즈니스 로직 구현으로 진행하겠습니다.
+- PRD.md 및 FEATURES 문서 전체 검토 후 승인 부탁드립니다.
+- 승인 후 커밋하고 코드 작업을 시작하겠습니다.
 
 ---
 ### 리뷰 (by User)
-- 정상 출력 확인
+- PRD.md 파일 확인함.
+- 각 Feature .md 파일들 확인했음.
+- 수정 의견 없음
 
 ### 다음 작업 지시
-- 비즈니스 로직 구현
-
----
-
-## [2026-06-12] 빌드 오류 수정 - /utf-8 옵션 추가
-
-### 작업 내용
-- 원인: 한국어 문자열이 포함된 소스 파일을 MSVC가 코드페이지 949(EUC-KR)로 읽어 C2001 오류 발생
-- 수정: `ConsoleMVC.vcxproj`, `ConsoleMVCTest.vcxproj` 전 구성(Debug/Release × Win32/x64)에 `/utf-8` 컴파일러 옵션 추가
-- 결과: 빌드 성공, **27/27 테스트 통과**
-
-### 커밋
-- `b9fcdd4` [AI-Fix] MSVC 빌드 오류 수정 - /utf-8 컴파일러 옵션 추가
-
-### 리뷰 요청
-- 빌드 및 테스트 정상 동작 확인 부탁드립니다.
-- 확인 후 각 Feature 비즈니스 로직 구현으로 진행하겠습니다.
-
----
-### 리뷰 (by User)
-- 정상 빌드됨 확인
-- 실행시 콘솔창 한글 인코딩 깨짐
-
-### 다음 작업 지시
-- 실행시 콘솔창 한글 인코딩 깨짐 문제 해결
+- 각 Feature에 대한 Test 코드 개발 후 커밋
+- 각 Feature 기능 개발 전 User 검토 요청
 
 ---
 
@@ -115,32 +101,77 @@
 
 ---
 
-## [2026-06-12] PRD.md 및 FEATURES 문서 작성
+## [2026-06-12] 빌드 오류 수정 - /utf-8 옵션 추가
 
 ### 작업 내용
-- `Document/PRD.md` 작성: 사용자 관점 기능 요구사항 정리 (메인 메뉴 + 6개 하위 기능)
-- `Document/PRD.md` 작성: 사용자 관점 기능 요구사항 (메인 메뉴 + 6개 하위 기능)
-- `Document/FEATURES/FEATURE-01-main-menu.md` 작성
-- `Document/FEATURES/FEATURE-02-sample-management.md` 작성
-- `Document/FEATURES/FEATURE-03-order-placement.md` 작성
-- `Document/FEATURES/FEATURE-04-order-approval.md` 작성
-- `Document/FEATURES/FEATURE-05-monitoring.md` 작성
-- `Document/FEATURES/FEATURE-06-production-line.md` 작성
-- `Document/FEATURES/FEATURE-07-release.md` 작성
+- 원인: 한국어 문자열이 포함된 소스 파일을 MSVC가 코드페이지 949(EUC-KR)로 읽어 C2001 오류 발생
+- 수정: `ConsoleMVC.vcxproj`, `ConsoleMVCTest.vcxproj` 전 구성(Debug/Release × Win32/x64)에 `/utf-8` 컴파일러 옵션 추가
+- 결과: 빌드 성공, **27/27 테스트 통과**
 
 ### 커밋
-- (커밋 예정)
+- `b9fcdd4` [AI-Fix] MSVC 빌드 오류 수정 - /utf-8 컴파일러 옵션 추가
 
 ### 리뷰 요청
-- PRD.md 및 FEATURES 문서 전체 검토 후 승인 부탁드립니다.
-- 승인 후 커밋하고 코드 작업을 시작하겠습니다.
+- 빌드 및 테스트 정상 동작 확인 부탁드립니다.
+- 확인 후 각 Feature 비즈니스 로직 구현으로 진행하겠습니다.
 
 ---
 ### 리뷰 (by User)
-- PRD.md 파일 확인함.
-- 각 Feature .md 파일들 확인했음. 
-- 수정 의견 없음
+- 정상 빌드됨 확인
+- 실행시 콘솔창 한글 인코딩 깨짐
 
 ### 다음 작업 지시
-- 각 Feature에 대한 Test 코드 개발 후 커밋
-- 각 Feature 기능 개발 전 User 검토 요청
+- 실행시 콘솔창 한글 인코딩 깨짐 문제 해결
+
+---
+
+## [2026-06-12] 콘솔 한글 인코딩 깨짐 수정
+
+### 작업 내용
+- 원인: Windows 콘솔 기본 코드페이지(949, EUC-KR)로 인해 UTF-8 문자열이 깨짐
+- 수정: `main()` 시작 시 `SetConsoleOutputCP(CP_UTF8)` / `SetConsoleCP(CP_UTF8)` 호출 추가
+- 확인: 메인 메뉴 한글 정상 출력 확인
+
+### 커밋
+- `ae6fa5b` [AI-Fix] 콘솔 한글 인코딩 깨짐 수정
+
+### 리뷰 요청
+- 콘솔에서 한글 정상 출력 확인 부탁드립니다.
+- 확인 후 Feature 비즈니스 로직 구현으로 진행하겠습니다.
+
+---
+### 리뷰 (by User)
+- 정상 출력 확인
+
+### 다음 작업 지시
+- 비즈니스 로직 구현
+
+---
+
+## [2026-06-12] 비즈니스 로직 구현 - 6개 컨트롤러 전체 완성
+
+### 작업 내용
+- **SampleController**: 시료 등록 (ID 중복 검증, 수율 0~1 검증), 시료 검색 (ID/이름/수율 기준)
+- **OrderController**: 시료ID 유효성 확인, 고객명/수량 입력, 주문번호 자동 생성(날짜+시퀀스)
+- **ApprovalController**: 재고 충분 → CONFIRMED, 재고 부족 → 부족분 계산 후 확인 → PRODUCING, 거절 → REJECTED
+- **MonitoringController**: 샘플별 CONFIRMED+PRODUCING 합산 → StockInfo(SUFFICIENT/INSUFFICIENT/DEPLETED) 계산
+- **ProductionLineController**: PRODUCING 주문 → 현재 생산 + 대기 큐 표시
+- **ReleaseController**: CONFIRMED 주문 선택 → RELEASE 전환 + 재고 차감
+- **모델 확장**: Order에 actualProduction, totalProductionTimeMin 추가; SampleRepository에 decreaseStock() 추가; OrderRepository에 updateOrder() 추가
+- **View 인터페이스 확장**: ISampleView 5개, IOrderView 2개, IApprovalView 1개 메서드 추가
+- **테스트**: TODO 주석 활성화 포함 38/38 전부 통과 (기존 27 → 38)
+
+### 커밋
+- `a192945` [AI-Feature] 비즈니스 로직 구현 - 6개 컨트롤러 전체 기능 완성
+
+### 리뷰 요청
+- 각 컨트롤러 비즈니스 로직 흐름 검토 부탁드립니다.
+- 실행하여 전체 메뉴 흐름 확인 부탁드립니다.
+
+---
+### 리뷰 (by User)
+- 비즈니스 로직의 경우 SPEC 문서에 충분히 기술되어 있음
+
+### 다음 작업 지시
+- 향후부터 유닛 테스트 빌드 직접 빌드, 수행 후 worklog 에 반영하여 작성
+- PRD 다음 개발 계획 수행

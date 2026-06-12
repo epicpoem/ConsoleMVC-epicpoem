@@ -136,6 +136,9 @@ WORKLOG 파일 위치: `Document/WORKLOG.md`
 ```
 
 ### WORKLOG 작성 형식
+
+> **순서 규칙**: 새 로그 항목은 **파일 맨 아래에 추가**한다 (오래된 순 위 → 최신 순 아래).
+
 ```markdown
 ## [YYYY-MM-DD] {작업 제목}
 
