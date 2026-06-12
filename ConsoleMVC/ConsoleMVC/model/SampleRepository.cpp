@@ -21,3 +21,11 @@ std::optional<Sample> SampleRepository::findById(const std::string& id) const {
 bool SampleRepository::exists(const std::string& id) const {
     return findById(id).has_value();
 }
+
+bool SampleRepository::decreaseStock(const std::string& id, int amount) {
+    auto it = std::find_if(samples_.begin(), samples_.end(),
+        [&id](const Sample& s) { return s.id == id; });
+    if (it == samples_.end()) return false;
+    it->stock = std::max(0, it->stock - amount);
+    return true;
+}

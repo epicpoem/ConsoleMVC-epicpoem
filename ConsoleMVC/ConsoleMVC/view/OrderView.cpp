@@ -6,6 +6,14 @@ void OrderView::showOrderForm() {
     std::cout << "시료 ID  : ";
 }
 
+void OrderView::showCustomerNamePrompt() {
+    std::cout << "고객명   : ";
+}
+
+void OrderView::showQuantityPrompt() {
+    std::cout << "수량(ea) : ";
+}
+
 void OrderView::showOrderSuccess(const Order& order) {
     std::cout << "\n[주문 접수 완료]\n";
     std::cout << "  주문번호: " << order.orderNo << "\n";

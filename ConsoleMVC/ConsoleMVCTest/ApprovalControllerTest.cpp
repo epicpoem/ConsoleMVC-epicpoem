@@ -14,6 +14,7 @@ public:
     MOCK_METHOD(void, showReservedOrders, (const std::vector<Order>&), (override));
     MOCK_METHOD(void, showNoReservedOrders, (), (override));
     MOCK_METHOD(void, showInvalidInput, (), (override));
+    MOCK_METHOD(void, showApproveOrRejectPrompt, (), (override));
     MOCK_METHOD(void, showApprovalResult, (const Order&), (override));
     MOCK_METHOD(void, showRejectionResult, (const Order&), (override));
     MOCK_METHOD(void, showStockShortage, (int, int, double), (override));
@@ -35,7 +36,7 @@ TEST_F(ApprovalControllerTest, ShowsNoReservedOrdersWhenEmpty) {
 }
 
 TEST_F(ApprovalControllerTest, ShowsReservedOrderListWhenExists) {
-    orderRepo.add({"ORD-20260612-0001", "S-001", "테스트고객", 10, OrderStatus::RESERVED});
+    orderRepo.add({"ORD-20260612-0001", "S-001", "Customer", 10, OrderStatus::RESERVED});
     NiceMock<MockApprovalView> view;
     std::istringstream in("0\n");
     ApprovalController ctrl(in, view, orderRepo, sampleRepo);
@@ -45,7 +46,7 @@ TEST_F(ApprovalControllerTest, ShowsReservedOrderListWhenExists) {
 }
 
 TEST_F(ApprovalControllerTest, InputZeroReturnsToMain) {
-    orderRepo.add({"ORD-20260612-0001", "S-001", "테스트고객", 10, OrderStatus::RESERVED});
+    orderRepo.add({"ORD-20260612-0001", "S-001", "Customer", 10, OrderStatus::RESERVED});
     NiceMock<MockApprovalView> view;
     std::istringstream in("0\n");
     ApprovalController ctrl(in, view, orderRepo, sampleRepo);
@@ -53,40 +54,38 @@ TEST_F(ApprovalControllerTest, InputZeroReturnsToMain) {
     ctrl.run();  // should not loop infinitely
 }
 
-// TODO: Feature 구현 후 활성화
-// TEST_F(ApprovalControllerTest, ApproveWithSufficientStock_BecomesConfirmed) {
-//     sampleRepo.add({"S-001", "시료", 0.5, 0.9, 100});
-//     orderRepo.add({"ORD-0001", "S-001", "고객", 50, OrderStatus::RESERVED});
-//     NiceMock<MockApprovalView> view;
-//     std::istringstream in("1\nY\n0\n");  // select order 1, approve, back
-//     ApprovalController ctrl(in, view, orderRepo, sampleRepo);
-//
-//     EXPECT_CALL(view, showApprovalResult(_)).Times(1);
-//     ctrl.run();
-//     EXPECT_EQ(orderRepo.countByStatus(OrderStatus::CONFIRMED), 1);
-// }
+TEST_F(ApprovalControllerTest, ApproveWithSufficientStock_BecomesConfirmed) {
+    sampleRepo.add({"S-001", "Sample", 0.5, 0.9, 100});
+    orderRepo.add({"ORD-0001", "S-001", "Customer", 50, OrderStatus::RESERVED});
+    NiceMock<MockApprovalView> view;
+    std::istringstream in("1\nY\n0\n");
+    ApprovalController ctrl(in, view, orderRepo, sampleRepo);
 
-// TODO: Feature 구현 후 활성화
-// TEST_F(ApprovalControllerTest, ApproveWithInsufficientStock_BecomesProducing) {
-//     sampleRepo.add({"S-001", "시료", 0.5, 0.9, 10});
-//     orderRepo.add({"ORD-0001", "S-001", "고객", 100, OrderStatus::RESERVED});
-//     NiceMock<MockApprovalView> view;
-//     std::istringstream in("1\nY\n0\n");
-//     ApprovalController ctrl(in, view, orderRepo, sampleRepo);
-//
-//     EXPECT_CALL(view, showStockShortage(_, _, _)).Times(1);
-//     ctrl.run();
-//     EXPECT_EQ(orderRepo.countByStatus(OrderStatus::PRODUCING), 1);
-// }
+    EXPECT_CALL(view, showApprovalResult(_)).Times(1);
+    ctrl.run();
+    EXPECT_EQ(orderRepo.countByStatus(OrderStatus::CONFIRMED), 1);
+}
 
-// TODO: Feature 구현 후 활성화
-// TEST_F(ApprovalControllerTest, RejectOrder_BecomesRejected) {
-//     orderRepo.add({"ORD-0001", "S-001", "고객", 50, OrderStatus::RESERVED});
-//     NiceMock<MockApprovalView> view;
-//     std::istringstream in("1\nN\n0\n");
-//     ApprovalController ctrl(in, view, orderRepo, sampleRepo);
-//
-//     EXPECT_CALL(view, showRejectionResult(_)).Times(1);
-//     ctrl.run();
-//     EXPECT_EQ(orderRepo.countByStatus(OrderStatus::REJECTED), 1);
-// }
+TEST_F(ApprovalControllerTest, ApproveWithInsufficientStock_BecomesProducing) {
+    sampleRepo.add({"S-001", "Sample", 0.5, 0.9, 10});
+    orderRepo.add({"ORD-0001", "S-001", "Customer", 100, OrderStatus::RESERVED});
+    NiceMock<MockApprovalView> view;
+    std::istringstream in("1\nY\nY\n0\n");
+    ApprovalController ctrl(in, view, orderRepo, sampleRepo);
+
+    EXPECT_CALL(view, showStockShortage(_, _, _)).Times(1);
+    EXPECT_CALL(view, showApprovalResult(_)).Times(1);
+    ctrl.run();
+    EXPECT_EQ(orderRepo.countByStatus(OrderStatus::PRODUCING), 1);
+}
+
+TEST_F(ApprovalControllerTest, RejectOrder_BecomesRejected) {
+    orderRepo.add({"ORD-0001", "S-001", "Customer", 50, OrderStatus::RESERVED});
+    NiceMock<MockApprovalView> view;
+    std::istringstream in("1\nN\n0\n");
+    ApprovalController ctrl(in, view, orderRepo, sampleRepo);
+
+    EXPECT_CALL(view, showRejectionResult(_)).Times(1);
+    ctrl.run();
+    EXPECT_EQ(orderRepo.countByStatus(OrderStatus::REJECTED), 1);
+}

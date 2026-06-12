@@ -33,6 +33,10 @@ void ApprovalView::showInvalidInput() {
     std::cout << "[오류] 유효하지 않은 입력입니다.\n";
 }
 
+void ApprovalView::showApproveOrRejectPrompt() {
+    std::cout << "[Y] 승인 / [N] 거절: ";
+}
+
 void ApprovalView::showApprovalResult(const Order& order) {
     std::cout << "[승인 완료] " << order.orderNo
               << " → " << (order.status == OrderStatus::CONFIRMED ? "CONFIRMED" : "PRODUCING") << "\n";

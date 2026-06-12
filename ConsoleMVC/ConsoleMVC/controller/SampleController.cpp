@@ -1,5 +1,6 @@
 #include "SampleController.h"
 #include <string>
+#include <algorithm>
 
 SampleController::SampleController(std::istream& in, ISampleView& view, SampleRepository& repo)
     : in_(in), view_(view), repo_(repo) {}
@@ -8,7 +9,7 @@ void SampleController::run() {
     while (true) {
         view_.showMenu();
         std::string line;
-        std::getline(in_, line);
+        if (!std::getline(in_, line)) return;
         if (line == "0") return;
         if (line == "1")      handleRegister();
         else if (line == "2") handleList();
@@ -18,16 +19,78 @@ void SampleController::run() {
 }
 
 void SampleController::handleRegister() {
-    // TODO: Feature - 시료 등록 로직 구현
     view_.showRegisterPrompt();
+
+    std::string id;
+    if (!std::getline(in_, id) || id.empty()) return;
+
+    if (repo_.exists(id)) {
+        view_.showDuplicateId();
+        return;
+    }
+
+    view_.showNamePrompt();
+    std::string name;
+    if (!std::getline(in_, name)) return;
+
+    view_.showTimePrompt();
+    std::string timeStr;
+    if (!std::getline(in_, timeStr)) return;
+    double avgTime = 0.0;
+    try { avgTime = std::stod(timeStr); } catch (...) {}
+
+    view_.showYieldPrompt();
+    std::string yieldStr;
+    if (!std::getline(in_, yieldStr)) return;
+    double yield = 0.0;
+    try { yield = std::stod(yieldStr); } catch (...) {}
+
+    if (yield < 0.0 || yield > 1.0) {
+        view_.showYieldOutOfRange();
+        return;
+    }
+
+    Sample sample{id, name, avgTime, yield, 0};
+    repo_.add(sample);
+    view_.showRegisterSuccess(sample);
 }
 
 void SampleController::handleList() {
-    // TODO: Feature - 시료 목록 조회
     view_.showSampleList(repo_.getAll());
 }
 
 void SampleController::handleSearch() {
-    // TODO: Feature - 시료 검색 로직 구현
     view_.showSearchMenu();
+
+    std::string criteria;
+    if (!std::getline(in_, criteria)) return;
+    if (criteria == "0") return;
+
+    view_.showSearchPrompt();
+    std::string term;
+    if (!std::getline(in_, term)) return;
+
+    auto all = repo_.getAll();
+    std::vector<Sample> result;
+
+    if (criteria == "1") {
+        for (const auto& s : all)
+            if (s.id.find(term) != std::string::npos) result.push_back(s);
+    } else if (criteria == "2") {
+        for (const auto& s : all)
+            if (s.name.find(term) != std::string::npos) result.push_back(s);
+    } else if (criteria == "3") {
+        double threshold = 0.0;
+        try { threshold = std::stod(term); } catch (...) {}
+        for (const auto& s : all)
+            if (s.yield >= threshold) result.push_back(s);
+    } else {
+        view_.showInvalidInput();
+        return;
+    }
+
+    if (result.empty())
+        view_.showNoResults();
+    else
+        view_.showSearchResult(result);
 }

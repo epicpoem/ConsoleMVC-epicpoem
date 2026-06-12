@@ -10,6 +10,7 @@ public:
     std::vector<Sample> getAll() const;
     std::optional<Sample> findById(const std::string& id) const;
     bool exists(const std::string& id) const;
+    bool decreaseStock(const std::string& id, int amount);
 
 private:
     std::vector<Sample> samples_;

@@ -20,6 +20,22 @@ void SampleView::showRegisterPrompt() {
     std::cout << "시료 ID   : ";
 }
 
+void SampleView::showNamePrompt() {
+    std::cout << "이름      : ";
+}
+
+void SampleView::showTimePrompt() {
+    std::cout << "평균생산시간(min/ea): ";
+}
+
+void SampleView::showYieldPrompt() {
+    std::cout << "수율(0~1) : ";
+}
+
+void SampleView::showYieldOutOfRange() {
+    std::cout << "[오류] 수율은 0.0 ~ 1.0 사이의 값이어야 합니다.\n";
+}
+
 void SampleView::showRegisterSuccess(const Sample& sample) {
     std::cout << "[성공] 시료가 등록되었습니다.\n";
     std::cout << "  ID: " << sample.id
@@ -58,8 +74,13 @@ void SampleView::showSearchMenu() {
     std::cout << "\n[시료 검색] 검색 기준을 선택하세요.\n";
     std::cout << " [1] ID로 검색\n";
     std::cout << " [2] 이름으로 검색\n";
-    std::cout << " [3] 수율로 검색\n";
+    std::cout << " [3] 수율로 검색 (입력값 이상)\n";
+    std::cout << " [0] 뒤로\n";
     std::cout << "선택: ";
+}
+
+void SampleView::showSearchPrompt() {
+    std::cout << "검색어    : ";
 }
 
 void SampleView::showSearchResult(const std::vector<Sample>& samples) {

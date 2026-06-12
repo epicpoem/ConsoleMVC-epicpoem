@@ -39,6 +39,14 @@ int OrderRepository::countByStatus(OrderStatus status) const {
         [status](const Order& o) { return o.status == status; }));
 }
 
+bool OrderRepository::updateOrder(const Order& updated) {
+    auto it = std::find_if(orders_.begin(), orders_.end(),
+        [&updated](const Order& o) { return o.orderNo == updated.orderNo; });
+    if (it == orders_.end()) return false;
+    *it = updated;
+    return true;
+}
+
 std::string OrderRepository::generateOrderNo(const std::string& date) {
     std::ostringstream oss;
     oss << "ORD-" << date << "-" << std::setw(4) << std::setfill('0') << ++dailySeq_;

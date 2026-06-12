@@ -53,14 +53,13 @@ TEST_F(MonitoringControllerTest, OrderStatsReflectActualCounts) {
     ctrl.run();
 }
 
-// TODO: Feature 구현 후 활성화
-// TEST_F(MonitoringControllerTest, StockInfoReflectsActualSamples) {
-//     sampleRepo.add({"S-001", "시료A", 0.5, 0.9, 100});
-//     orderRepo.add({"ORD-0001", "S-001", "고객", 50, OrderStatus::CONFIRMED});
-//     NiceMock<MockMonitoringView> view;
-//     std::istringstream in("\n");
-//     MonitoringController ctrl(in, view, orderRepo, sampleRepo);
-//
-//     EXPECT_CALL(view, showStockInfo(testing::SizeIs(1))).Times(1);
-//     ctrl.run();
-// }
+TEST_F(MonitoringControllerTest, StockInfoReflectsActualSamples) {
+    sampleRepo.add({"S-001", "Sample A", 0.5, 0.9, 100});
+    orderRepo.add({"ORD-0001", "S-001", "Customer", 50, OrderStatus::CONFIRMED});
+    NiceMock<MockMonitoringView> view;
+    std::istringstream in("\n");
+    MonitoringController ctrl(in, view, orderRepo, sampleRepo);
+
+    EXPECT_CALL(view, showStockInfo(testing::SizeIs(1))).Times(1);
+    ctrl.run();
+}

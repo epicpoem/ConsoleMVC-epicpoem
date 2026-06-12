@@ -39,7 +39,7 @@ int main() {
     ApprovalController     approvalCtrl(std::cin, approvalView, orderRepo, sampleRepo);
     MonitoringController   monitoringCtrl(std::cin, monitoringView, orderRepo, sampleRepo);
     ProductionLineController prodLineCtrl(std::cin, productionLineView, orderRepo);
-    ReleaseController      releaseCtrl(std::cin, releaseView, orderRepo);
+    ReleaseController      releaseCtrl(std::cin, releaseView, orderRepo, sampleRepo);
 
     std::array<IController*, 6> subs = {
         &sampleCtrl,

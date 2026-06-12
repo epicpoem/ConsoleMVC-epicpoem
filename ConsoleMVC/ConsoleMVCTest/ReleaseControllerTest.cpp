@@ -4,6 +4,7 @@
 #include "../ConsoleMVC/controller/ReleaseController.h"
 #include "../ConsoleMVC/view/IReleaseView.h"
 #include "../ConsoleMVC/model/OrderRepository.h"
+#include "../ConsoleMVC/model/SampleRepository.h"
 
 using ::testing::_;
 using ::testing::NiceMock;
@@ -18,45 +19,45 @@ public:
 
 class ReleaseControllerTest : public ::testing::Test {
 protected:
-    OrderRepository orderRepo;
+    OrderRepository  orderRepo;
+    SampleRepository sampleRepo;
 };
 
 TEST_F(ReleaseControllerTest, ShowsNoConfirmedOrdersWhenEmpty) {
     NiceMock<MockReleaseView> view;
     std::istringstream in("");
-    ReleaseController ctrl(in, view, orderRepo);
+    ReleaseController ctrl(in, view, orderRepo, sampleRepo);
 
     EXPECT_CALL(view, showNoConfirmedOrders()).Times(1);
     ctrl.run();
 }
 
 TEST_F(ReleaseControllerTest, ShowsConfirmedOrderListWhenExists) {
-    orderRepo.add({"ORD-20260612-0001", "S-001", "테스트고객", 10, OrderStatus::CONFIRMED});
+    orderRepo.add({"ORD-20260612-0001", "S-001", "Customer", 10, OrderStatus::CONFIRMED});
     NiceMock<MockReleaseView> view;
     std::istringstream in("0\n");
-    ReleaseController ctrl(in, view, orderRepo);
+    ReleaseController ctrl(in, view, orderRepo, sampleRepo);
 
     EXPECT_CALL(view, showConfirmedOrders(_)).Times(1);
     ctrl.run();
 }
 
 TEST_F(ReleaseControllerTest, InputZeroReturnsToMain) {
-    orderRepo.add({"ORD-20260612-0001", "S-001", "테스트고객", 10, OrderStatus::CONFIRMED});
+    orderRepo.add({"ORD-20260612-0001", "S-001", "Customer", 10, OrderStatus::CONFIRMED});
     NiceMock<MockReleaseView> view;
     std::istringstream in("0\n");
-    ReleaseController ctrl(in, view, orderRepo);
+    ReleaseController ctrl(in, view, orderRepo, sampleRepo);
 
     ctrl.run();  // should not loop infinitely
 }
 
-// TODO: Feature 구현 후 활성화
-// TEST_F(ReleaseControllerTest, SelectOrderProcessesRelease) {
-//     orderRepo.add({"ORD-0001", "S-001", "고객", 10, OrderStatus::CONFIRMED});
-//     NiceMock<MockReleaseView> view;
-//     std::istringstream in("1\n0\n");
-//     ReleaseController ctrl(in, view, orderRepo);
-//
-//     EXPECT_CALL(view, showReleaseSuccess(_, _)).Times(1);
-//     ctrl.run();
-//     EXPECT_EQ(orderRepo.countByStatus(OrderStatus::RELEASE), 1);
-// }
+TEST_F(ReleaseControllerTest, SelectOrderProcessesRelease) {
+    orderRepo.add({"ORD-0001", "S-001", "Customer", 10, OrderStatus::CONFIRMED});
+    NiceMock<MockReleaseView> view;
+    std::istringstream in("1\n0\n");
+    ReleaseController ctrl(in, view, orderRepo, sampleRepo);
+
+    EXPECT_CALL(view, showReleaseSuccess(_, _)).Times(1);
+    ctrl.run();
+    EXPECT_EQ(orderRepo.countByStatus(OrderStatus::RELEASE), 1);
+}

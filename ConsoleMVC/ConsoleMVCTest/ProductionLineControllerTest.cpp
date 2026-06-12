@@ -48,13 +48,12 @@ TEST_F(ProductionLineControllerTest, ShowsNullProductionWhenNoProducingOrder) {
     ctrl.run();
 }
 
-// TODO: Feature 구현 후 활성화
-// TEST_F(ProductionLineControllerTest, ShowsProductionItemWhenProducingOrderExists) {
-//     orderRepo.add({"ORD-0001", "S-001", "고객", 100, OrderStatus::PRODUCING});
-//     NiceMock<MockProductionLineView> view;
-//     std::istringstream in("\n");
-//     ProductionLineController ctrl(in, view, orderRepo);
-//
-//     EXPECT_CALL(view, showCurrentProduction(testing::NotNull())).Times(1);
-//     ctrl.run();
-// }
+TEST_F(ProductionLineControllerTest, ShowsProductionItemWhenProducingOrderExists) {
+    orderRepo.add({"ORD-0001", "S-001", "Customer", 100, OrderStatus::PRODUCING});
+    NiceMock<MockProductionLineView> view;
+    std::istringstream in("\n");
+    ProductionLineController ctrl(in, view, orderRepo);
+
+    EXPECT_CALL(view, showCurrentProduction(testing::NotNull())).Times(1);
+    ctrl.run();
+}

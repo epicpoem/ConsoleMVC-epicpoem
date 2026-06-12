@@ -8,4 +8,6 @@ struct Order {
     std::string customerName;
     int quantity{0};
     OrderStatus status{OrderStatus::RESERVED};
+    int actualProduction{0};
+    double totalProductionTimeMin{0.0};
 };

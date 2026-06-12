@@ -12,6 +12,7 @@ public:
     std::optional<Order> findByNo(const std::string& orderNo) const;
     bool updateStatus(const std::string& orderNo, OrderStatus newStatus);
     int countByStatus(OrderStatus status) const;
+    bool updateOrder(const Order& updated);
 
 private:
     std::vector<Order> orders_;
