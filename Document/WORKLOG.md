@@ -33,3 +33,66 @@
 ---
 
 <!-- 실제 로그는 아래에 최신순으로 작성 -->
+
+## [2026-06-12] MVC 스켈레톤 구조 및 테스트 코드 작성
+
+### 작업 내용
+- Model / View(인터페이스 + 구현) / Controller 3계층 패키지 분리 완성
+- `model/`: Sample, Order, OrderStatus, SampleRepository, OrderRepository
+- `view/`: IXxxView 인터페이스 7개 + 구현 클래스 7개
+- `controller/`: IController, MainMenuController + 6개 서브컨트롤러
+- `main.cpp`: 전체 의존성 배선(wiring) 완성
+- `ConsoleMVCTest/` 프로젝트: 각 Feature별 테스트 코드 작성 (7개 파일)
+  - 네비게이션 흐름 테스트 (현재 통과 가능)
+  - Feature 비즈니스 로직 테스트 (TODO로 주석 처리 - Feature 구현 후 활성화 예정)
+- `ConsoleMVC.slnx`: 테스트 프로젝트 추가
+- `ConsoleMVC.vcxproj`: 신규 소스파일 전체 등록
+
+### 커밋
+- (커밋 예정)
+
+### 리뷰 요청
+- MVC 계층 분리 구조가 의도에 맞는지 확인 부탁드립니다.
+- 테스트 케이스 설계 방향 검토 부탁드립니다.
+  - 현재: 네비게이션/뷰 호출 테스트는 즉시 통과 가능, 비즈니스 로직 테스트는 주석 처리
+  - Feature 구현 후 주석 해제하여 활성화하는 방식
+- 승인 후 각 Feature 비즈니스 로직 구현 단계로 진행하겠습니다.
+
+---
+### 리뷰 (by User)
+-
+
+### 다음 작업 지시
+-
+
+---
+
+## [2026-06-12] PRD.md 및 FEATURES 문서 작성
+
+### 작업 내용
+- `Document/PRD.md` 작성: 사용자 관점 기능 요구사항 정리 (메인 메뉴 + 6개 하위 기능)
+- `Document/PRD.md` 작성: 사용자 관점 기능 요구사항 (메인 메뉴 + 6개 하위 기능)
+- `Document/FEATURES/FEATURE-01-main-menu.md` 작성
+- `Document/FEATURES/FEATURE-02-sample-management.md` 작성
+- `Document/FEATURES/FEATURE-03-order-placement.md` 작성
+- `Document/FEATURES/FEATURE-04-order-approval.md` 작성
+- `Document/FEATURES/FEATURE-05-monitoring.md` 작성
+- `Document/FEATURES/FEATURE-06-production-line.md` 작성
+- `Document/FEATURES/FEATURE-07-release.md` 작성
+
+### 커밋
+- (커밋 예정)
+
+### 리뷰 요청
+- PRD.md 및 FEATURES 문서 전체 검토 후 승인 부탁드립니다.
+- 승인 후 커밋하고 코드 작업을 시작하겠습니다.
+
+---
+### 리뷰 (by User)
+- PRD.md 파일 확인함.
+- 각 Feature .md 파일들 확인했음. 
+- 수정 의견 없음
+
+### 다음 작업 지시
+- 각 Feature에 대한 Test 코드 개발 후 커밋
+- 각 Feature 기능 개발 전 User 검토 요청
