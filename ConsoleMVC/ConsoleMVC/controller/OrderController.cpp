@@ -14,7 +14,7 @@ static std::string getCurrentDate() {
 }
 
 OrderController::OrderController(std::istream& in, IOrderView& view,
-                                 SampleRepository& sampleRepo, OrderRepository& orderRepo)
+                                 ISampleRepository& sampleRepo, IOrderRepository& orderRepo)
     : in_(in), view_(view), sampleRepo_(sampleRepo), orderRepo_(orderRepo) {}
 
 void OrderController::run() {

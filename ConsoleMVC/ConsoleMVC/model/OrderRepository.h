@@ -1,23 +1,19 @@
 #pragma once
-#include "Order.h"
+#include "IOrderRepository.h"
 #include <vector>
-#include <optional>
-#include <string>
 
-class OrderRepository {
+class OrderRepository : public IOrderRepository {
 public:
-    void add(const Order& order);
-    std::vector<Order> getAll() const;
-    std::vector<Order> getByStatus(OrderStatus status) const;
-    std::optional<Order> findByNo(const std::string& orderNo) const;
-    bool updateStatus(const std::string& orderNo, OrderStatus newStatus);
-    int countByStatus(OrderStatus status) const;
-    bool updateOrder(const Order& updated);
+    void add(const Order& order) override;
+    std::vector<Order> getAll() const override;
+    std::vector<Order> getByStatus(OrderStatus status) const override;
+    std::optional<Order> findByNo(const std::string& orderNo) const override;
+    int countByStatus(OrderStatus status) const override;
+    bool updateOrder(const Order& updated) override;
+    bool updateStatus(const std::string& orderNo, OrderStatus newStatus) override;
+    std::string generateOrderNo(const std::string& date) override;
 
 private:
     std::vector<Order> orders_;
     int dailySeq_{0};
-
-public:
-    std::string generateOrderNo(const std::string& date);
 };

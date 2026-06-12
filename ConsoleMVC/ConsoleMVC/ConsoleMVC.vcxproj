@@ -160,6 +160,8 @@
     <ClInclude Include="model\OrderRepository.h" />
     <ClInclude Include="model\IClock.h" />
     <ClInclude Include="model\SystemClock.h" />
+    <ClInclude Include="model\ISampleRepository.h" />
+    <ClInclude Include="model\IOrderRepository.h" />
     <ClInclude Include="view\IMainMenuView.h" />
     <ClInclude Include="view\ISampleView.h" />
     <ClInclude Include="view\IOrderView.h" />

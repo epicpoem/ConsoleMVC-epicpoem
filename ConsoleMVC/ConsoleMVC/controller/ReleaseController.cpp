@@ -14,7 +14,7 @@ static std::string getCurrentDateTime() {
 }
 
 ReleaseController::ReleaseController(std::istream& in, IReleaseView& view,
-                                     OrderRepository& orderRepo, SampleRepository& sampleRepo)
+                                     IOrderRepository& orderRepo, ISampleRepository& sampleRepo)
     : in_(in), view_(view), orderRepo_(orderRepo), sampleRepo_(sampleRepo) {}
 
 void ReleaseController::run() {

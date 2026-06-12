@@ -2,7 +2,7 @@
 #include <string>
 #include <algorithm>
 
-SampleController::SampleController(std::istream& in, ISampleView& view, SampleRepository& repo)
+SampleController::SampleController(std::istream& in, ISampleView& view, ISampleRepository& repo)
     : in_(in), view_(view), repo_(repo) {}
 
 void SampleController::run() {

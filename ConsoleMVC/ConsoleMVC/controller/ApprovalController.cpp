@@ -4,7 +4,7 @@
 #include <algorithm>
 
 ApprovalController::ApprovalController(std::istream& in, IApprovalView& view,
-                                       OrderRepository& orderRepo, SampleRepository& sampleRepo,
+                                       IOrderRepository& orderRepo, ISampleRepository& sampleRepo,
                                        IClock& clock)
     : in_(in), view_(view), orderRepo_(orderRepo), sampleRepo_(sampleRepo), clock_(clock) {}
 

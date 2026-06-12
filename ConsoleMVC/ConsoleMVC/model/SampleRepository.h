@@ -1,17 +1,15 @@
 #pragma once
-#include "Sample.h"
+#include "ISampleRepository.h"
 #include <vector>
-#include <optional>
-#include <string>
 
-class SampleRepository {
+class SampleRepository : public ISampleRepository {
 public:
-    bool add(const Sample& sample);
-    std::vector<Sample> getAll() const;
-    std::optional<Sample> findById(const std::string& id) const;
-    bool exists(const std::string& id) const;
-    bool decreaseStock(const std::string& id, int amount);
-    bool increaseStock(const std::string& id, int amount);
+    bool add(const Sample& sample) override;
+    std::vector<Sample> getAll() const override;
+    std::optional<Sample> findById(const std::string& id) const override;
+    bool exists(const std::string& id) const override;
+    bool decreaseStock(const std::string& id, int amount) override;
+    bool increaseStock(const std::string& id, int amount) override;
 
 private:
     std::vector<Sample> samples_;

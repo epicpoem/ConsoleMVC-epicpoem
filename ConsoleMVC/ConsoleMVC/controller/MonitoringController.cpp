@@ -3,7 +3,7 @@
 #include <string>
 
 MonitoringController::MonitoringController(std::istream& in, IMonitoringView& view,
-                                           OrderRepository& orderRepo, SampleRepository& sampleRepo)
+                                           IOrderRepository& orderRepo, ISampleRepository& sampleRepo)
     : in_(in), view_(view), orderRepo_(orderRepo), sampleRepo_(sampleRepo) {}
 
 void MonitoringController::run() {

@@ -2,21 +2,21 @@
 #include <istream>
 #include "IController.h"
 #include "../view/IApprovalView.h"
-#include "../model/OrderRepository.h"
-#include "../model/SampleRepository.h"
+#include "../model/IOrderRepository.h"
+#include "../model/ISampleRepository.h"
 #include "../model/IClock.h"
 
 class ApprovalController : public IController {
 public:
     ApprovalController(std::istream& in, IApprovalView& view,
-                       OrderRepository& orderRepo, SampleRepository& sampleRepo,
+                       IOrderRepository& orderRepo, ISampleRepository& sampleRepo,
                        IClock& clock);
     void run() override;
 
 private:
     std::istream& in_;
     IApprovalView& view_;
-    OrderRepository& orderRepo_;
-    SampleRepository& sampleRepo_;
+    IOrderRepository& orderRepo_;
+    ISampleRepository& sampleRepo_;
     IClock& clock_;
 };
