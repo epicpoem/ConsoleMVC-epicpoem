@@ -1,5 +1,6 @@
 #include <iostream>
 #include <array>
+#include <windows.h>
 #include "model/SampleRepository.h"
 #include "model/OrderRepository.h"
 #include "view/MainMenuView.h"
@@ -19,6 +20,9 @@
 #include "controller/ReleaseController.h"
 
 int main() {
+    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleCP(CP_UTF8);
+
     SampleRepository sampleRepo;
     OrderRepository  orderRepo;
 
